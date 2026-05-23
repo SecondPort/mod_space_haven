@@ -13,77 +13,123 @@ SAVEGAMES_DIR = Path("/mnt/f/Steam/steamapps/common/SpaceHaven/savegames")
 # Extraído de spacehaven.jar: library/haven + library/texts
 RECURSOS: dict[int, tuple[str, str]] = {
     # Comida y bebida
-    15:   ("Hortalizas de raíz",        "Root Vegetables"),
-    16:   ("Agua",                        "Water"),
-    71:   ("Biomateria",                  "Bio Matter"),
-    706:  ("Frutas",                      "Fruits"),
-    707:  ("Carne artificial",            "Artificial Meat"),
-    712:  ("Comida espacial",             "Space Food"),
-    984:  ("Carne de monstruo",           "Monster Meat"),
-    985:  ("Carne humana",                "Human Meat"),
-    2657: ("Frutos secos",                "Nuts and Seeds"),
-    179:  ("Comida procesada",            "Processed Food"),
+    15:   ("Hortalizas de raíz",          "Root Vegetables"),
+    16:   ("Agua",                          "Water"),
+    71:   ("Biomateria",                    "Bio Matter"),
+    706:  ("Frutas",                        "Fruits"),
+    707:  ("Carne artificial",              "Artificial Meat"),
+    712:  ("Comida espacial",               "Space Food"),
+    984:  ("Carne de monstruo",             "Monster Meat"),
+    985:  ("Carne humana",                  "Human Meat"),
+    2657: ("Frutos secos",                  "Nuts and Seeds"),
+    179:  ("Comida procesada",              "Processed Food"),
+    # Bebidas
+    3366: ("Bebida alcohólica suave",       "Mild Alcohol"),
+    3378: ("Cereales y lúpulos",            "Grains and Hops"),
     # Combustible
-    178:  ("Hipercombustible",            "Hyperfuel"),
+    178:  ("Hipercombustible",              "Hyperfuel"),
     # Recursos básicos
-    40:   ("Hielo",                       "Ice"),
-    158:  ("Energio",                     "Energium"),
-    157:  ("Metales básicos",             "Base Metals"),
-    169:  ("Metales nobles",              "Noble Metals"),
-    170:  ("Carbono",                     "Carbon"),
-    171:  ("Sustancias químicas",         "Raw Chemicals"),
-    172:  ("Hiperio",                     "Hyperium"),
-    173:  ("Componentes electrónicos",    "Electronics Component"),
-    174:  ("Barras de energía",           "Energy Rod"),
-    175:  ("Plásticos",                   "Plastics"),
-    176:  ("Productos químicos",          "Chemicals"),
-    177:  ("Tejidos",                     "Fabrics"),
-    3512: ("Mineral exótico",             "Exotic Ore"),
-    3513: ("Mineral básico",              "Basic Ore"),
+    40:   ("Hielo",                         "Ice"),
+    157:  ("Metales básicos",               "Base Metals"),
+    158:  ("Energio",                       "Energium"),
+    169:  ("Metales nobles",                "Noble Metals"),
+    170:  ("Carbono",                       "Carbon"),
+    171:  ("Sustancias químicas",           "Raw Chemicals"),
+    172:  ("Hiperio",                       "Hyperium"),
+    173:  ("Componentes electrónicos",      "Electronics Component"),
+    174:  ("Barras de energía",             "Energy Rod"),
+    175:  ("Plásticos",                     "Plastics"),
+    176:  ("Productos químicos",            "Chemicals"),
+    177:  ("Tejidos",                       "Fabrics"),
+    3512: ("Mineral exótico",               "Exotic Ore"),
+    3513: ("Mineral básico",                "Basic Ore"),
     # Bloques fabricados
-    162:  ("Infrabloques",                "Infrablock"),
-    930:  ("Tecnobloques",                "Techblock"),
-    1759: ("Cascobloques",                "Hull Block"),
-    1919: ("Energibloques",               "Energy Block"),
-    1920: ("Superbloques",                "Superblock"),
-    1921: ("Blandibloques",               "Soft Block"),
-    1922: ("Placas de acero",             "Steel Plates"),
+    162:  ("Infrabloques",                  "Infrablock"),
+    930:  ("Tecnobloques",                  "Techblock"),
+    1759: ("Cascobloques",                  "Hull Block"),
+    1919: ("Energibloques",                 "Energy Block"),
+    1920: ("Superbloques",                  "Superblock"),
+    1921: ("Blandibloques",                 "Soft Block"),
+    1922: ("Placas de acero",               "Steel Plates"),
     # Componentes procesados
-    1924: ("Componentes optoelectrónicos","Optronics Component"),
-    1925: ("Componentes cuantrónicos",    "Quantronics Component"),
-    1926: ("Células de energía",          "Energy Cell"),
-    1932: ("Fibras",                      "Fibers"),
-    2715: ("Munición explosiva",          "Explosive Ammunition"),
-    3366: ("Bebida alcohólica suave",     "Mild Alcohol"),
-    3378: ("Cereales y lúpulos",          "Grains and Hops"),
-    3419: ("Partes de aumentos",          "Augmentation Parts"),
-    2475: ("Fertilizante",                "Fertilizer"),
+    1924: ("Componentes optoelectrónicos",  "Optronics Component"),
+    1925: ("Componentes cuantrónicos",      "Quantronics Component"),
+    1926: ("Células de energía",            "Energy Cell"),
+    1932: ("Fibras",                        "Fibers"),
+    2475: ("Fertilizante",                  "Fertilizer"),
+    3419: ("Partes de aumentos",            "Augmentation Parts"),
     # Residuos
-    1873: ("Infrarresiduos",              "Infra Scrap"),
-    1874: ("Residuos blandos",            "Soft Scrap"),
-    1886: ("Restos de casco",             "Hull Scrap"),
-    1946: ("Tecnorresiduos",              "Tech Scrap"),
-    1947: ("Residuos energéticos",        "Energy Scrap"),
+    1873: ("Infrarresiduos",                "Infra Scrap"),
+    1874: ("Residuos blandos",              "Soft Scrap"),
+    1886: ("Restos de casco",               "Hull Scrap"),
+    1946: ("Tecnorresiduos",                "Tech Scrap"),
+    1947: ("Residuos energéticos",          "Energy Scrap"),
     # Dinero
-    1858: ("Créditos",                    "Credits"),
+    1858: ("Créditos",                      "Credits"),
     # Médico y consumibles
-    2053: ("Suministros médicos",         "Medical Supplies"),
-    2058: ("Líquido intravenoso",         "IV Fluid"),
-    3925: ("PMI",                         "ISP"),
-    4005: ("Analgésicos",                 "Painkillers"),
-    4006: ("Estimulante de combate",      "Combat Stimulant"),
-    4007: ("Venda",                       "Bandage"),
+    2053: ("Suministros médicos",           "Medical Supplies"),
+    2058: ("Líquido intravenoso",           "IV Fluid"),
+    3925: ("PMI",                           "ISP"),
+    4005: ("Analgésicos",                   "Painkillers"),
+    4006: ("Estimulante de combate",        "Combat Stimulant"),
+    4007: ("Venda",                         "Bandage"),
+    4020: ("Estimulante de ánimo",          "Mood Stimulant"),
+    4022: ("CSP",                           "CSP"),
+    4025: ("Enzima alienígena",             "Alien Enzyme"),
+    4030: ("Vendaje de nanobots",           "Nano Wound Dressing"),
+    4035: ("Jeringa sedante",               "Sedative Syringe"),
+    # Armas
+    725:  ("Rifle de asalto",               "Rifle"),
+    728:  ("Subfusil",                      "SMG"),
+    729:  ("Escopeta",                      "Shotgun"),
+    746:  ("Granada",                       "Grenade"),
+    760:  ("Pistola",                       "Pistol"),
+    1021: ("Fusil de francotirador",        "Sniper Rifle"),
+    1152: ("Torreta X1",                    "Sentry Gun X1"),
+    2715: ("Munición explosiva",            "Explosive Ammunition"),
+    3069: ("Rifle láser",                   "Laser Rifle"),
+    3070: ("Pistola láser",                 "Laser Pistol"),
+    3071: ("Clustergun de plasma",          "Plasma Clustergun"),
+    3072: ("Rifle de plasma",               "Plasma Rifle"),
+    3956: ("Subfusil (M2)",                 "SMG"),
+    3960: ("Lanzallamas",                   "Flamethrower"),
+    3961: ("Rifle aturdidor",               "Stun Rifle"),
+    3962: ("Pistola aturdidora",            "Stun Pistol"),
+    3967: ("Lanzagranadas explosivo",       "Explosive Grenade Launcher"),
+    4040: ("Carga de brecha",               "Small Breaching Charge"),
+    4076: ("Lanzagranadas incendiario",     "Incendiary Grenade Launcher"),
+    4533: ("Subfusil (M3)",                 "SMG"),
+    # Accesorios de armas
+    3968: ("Mira básica",                   "Basic Scope"),
+    3969: ("Empuñadura táctica",            "Tactical Grip"),
+    3975: ("Autocargador de escopeta",      "Shotgun Autoloader"),
+    # Equipo y ropa
+    481:  ("Sombrero",                      "Hat"),
+    488:  ("Gafas de sol",                  "Sunglasses"),
+    3383: ("Chaleco antibalas",             "Bulletproof Vest"),
+    3384: ("Chaleco blindado",              "Armored Vest"),
+    3386: ("Control remoto",               "Remote Control"),
+    3387: ("Generador de oxígeno portátil", "Oxygen Generator"),
+    3388: ("Tanque de oxígeno",             "Oxygen Tank"),
+    3630: ("Extensor de O2 para traje",     "Space Suit Oxygen Extender"),
+    4065: ("Extensor de O2 para traje (M2)","Space Suit Oxygen Extender"),
+    # Herramientas
+    1733: ("Extintor",                      "Fire Extinguisher"),
+    2419: ("Utensilio de limpieza",         "Cleaning Tool"),
     # Varios
-    2797: ("Collar de esclavo",           "Slave Collar"),
-    3962: ("Pistola aturdidora",          "Stun Pistol"),
-    3967: ("Lanzagranadas explosivo",     "Explosive Grenade Launcher"),
-    4027: ("Órganos alienígenas",         "Alien Organs"),
-    4028: ("Órganos humanos",             "Human Organs"),
+    2797: ("Collar de esclavo",             "Slave Collar"),
+    3728: ("Fragmento de código",           "Code Fragment"),
+    4027: ("Órganos alienígenas",           "Alien Organs"),
+    4028: ("Órganos humanos",               "Human Organs"),
 }
 
-COMIDA_IDS   = {15, 16, 71, 179, 706, 707, 712, 984, 985, 2657}
+COMIDA_IDS      = {15, 16, 71, 179, 706, 707, 712, 984, 985, 2657, 3366, 3378}
 COMBUSTIBLE_IDS = {178}
-MEDICO_IDS   = {2053, 2058, 3925, 4005, 4006, 4007}
+MEDICO_IDS      = {2053, 2058, 3925, 4005, 4006, 4007, 4020, 4022, 4025, 4030, 4035}
+ARMAS_IDS       = {725, 728, 729, 746, 760, 1021, 1152, 2715, 3069, 3070, 3071, 3072,
+                   3956, 3960, 3961, 3962, 3967, 4040, 4076, 4533,
+                   3968, 3969, 3975}
+EQUIPO_IDS      = {481, 488, 3383, 3384, 3386, 3387, 3388, 3630, 4065, 1733, 2419}
 
 # Tags that identify machine sub-elements containing production buffers.
 # <inv> blocks nested directly inside these are NOT main cargo — they are
@@ -454,11 +500,14 @@ def main():
     print(f"  CRÉDITOS")
     print(f"  {'─' * 42}")
     print(f"  {'Créditos':<35}  {credits:>10,}")
+    known = COMIDA_IDS | COMBUSTIBLE_IDS | MEDICO_IDS | ARMAS_IDS | EQUIPO_IDS
     print_section("COMIDA / BEBIDA", inventario, COMIDA_IDS)
     print_section("COMBUSTIBLE", inventario, COMBUSTIBLE_IDS)
     print_section("MÉDICO / CONSUMIBLES", inventario, MEDICO_IDS)
+    print_section("ARMAS Y MUNICIÓN", inventario, ARMAS_IDS)
+    print_section("EQUIPO Y HERRAMIENTAS", inventario, EQUIPO_IDS)
     print_section("MATERIALES Y RECURSOS", inventario,
-                  {k for k in inventario if k not in COMIDA_IDS | COMBUSTIBLE_IDS | MEDICO_IDS})
+                  {k for k in inventario if k not in known})
 
     content, changed = edit_loop(content, ship_start, ship_end, inventario)
 
