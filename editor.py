@@ -85,6 +85,17 @@ COMIDA_IDS   = {15, 16, 71, 179, 706, 707, 712, 984, 985, 2657}
 COMBUSTIBLE_IDS = {178}
 MEDICO_IDS   = {2053, 2058, 3925, 4005, 4006, 4007}
 
+# Tags that identify machine sub-elements containing production buffers.
+# <inv> blocks nested directly inside these are NOT main cargo — they are
+# input/output buffers of machines and must not be touched by the editor.
+_MACHINE_TAGS = frozenset({
+    'prod', 'grow', 'engine', 'medical', 'mine', 'refinery',
+    'purifier', 'converter', 'research', 'workshop', 'logic',
+    'extract', 'analyze',
+})
+
+_INV_RE = re.compile(r'<inv>(.*?)</inv>', re.DOTALL)
+
 
 def nombre(eid: int) -> str:
     entry = RECURSOS.get(eid)
@@ -108,6 +119,44 @@ def buscar_por_nombre(query: str) -> list[tuple[int, str, str]]:
         if q in es.lower() or q in en.lower() or q == str(eid)
     ]
 
+
+# ---------------------------------------------------------------------------
+# Cargo container classification
+# ---------------------------------------------------------------------------
+
+def _last_opening_tag(text: str) -> str:
+    """Name of the last opening or self-closing XML tag in text, '' if none."""
+    m = re.search(r'<([a-zA-Z][a-zA-Z0-9]*)\b[^>]*/?>$', text.rstrip())
+    return m.group(1).lower() if m else ''
+
+
+def _is_cargo_inv(ship_block: str, inv_match: re.Match) -> bool:
+    """True when <inv> is a direct child of <feat> (main cargo container).
+
+    Space Haven XML structure:
+      Cargo container:  <feat ...> <inv> ...   ← direct child, edit allowed
+      Machine buffer:   <feat ...> <prod> <inv> ← nested inside machine, leave alone
+    """
+    pre = ship_block[:inv_match.start()]
+    return _last_opening_tag(pre) == 'feat'
+
+
+def _cargo_inv_ranges(ship_block: str) -> list[tuple[int, int]]:
+    """(start, end) spans of all cargo <inv> blocks within ship_block."""
+    return [
+        (m.start(), m.end())
+        for m in _INV_RE.finditer(ship_block)
+        if _is_cargo_inv(ship_block, m)
+    ]
+
+
+def _in_cargo(pos: int, ranges: list[tuple[int, int]]) -> bool:
+    return any(s <= pos < e for s, e in ranges)
+
+
+# ---------------------------------------------------------------------------
+# Save I/O
+# ---------------------------------------------------------------------------
 
 def load_save(path: Path) -> str:
     return path.read_text(encoding="utf-8")
@@ -160,45 +209,53 @@ def find_player_ship_bounds(content: str) -> tuple[int, int]:
     return start, pos
 
 
+# ---------------------------------------------------------------------------
+# Inventory read / write
+# ---------------------------------------------------------------------------
+
 def parse_inventory(ship_content: str) -> dict[int, int]:
+    """Sum inStorage for all items in CARGO containers only (not machine buffers)."""
     totals: dict[int, int] = {}
+    cargo_ranges = _cargo_inv_ranges(ship_content)
     for m in re.finditer(r'<s\s+elementaryId="(\d+)"\s+inStorage="(\d+)"', ship_content):
-        eid, amt = int(m.group(1)), int(m.group(2))
-        totals[eid] = totals.get(eid, 0) + amt
+        if _in_cargo(m.start(), cargo_ranges):
+            eid, amt = int(m.group(1)), int(m.group(2))
+            totals[eid] = totals.get(eid, 0) + amt
     return totals
 
 
 def _insert_resource(ship_block: str, eid: int, value: int) -> str:
-    # Find the largest <inv> block (main cargo container, not a production buffer)
-    inv_pattern = re.compile(r'<inv>(.*?)</inv>', re.DOTALL)
-    best_match = None
-    best_count = -1
-    for m in inv_pattern.finditer(ship_block):
-        items = re.findall(r'elementaryId="\d+"', m.group(1))
-        if len(items) > best_count:
-            best_count = len(items)
-            best_match = m
+    """Insert a new <s> tag into the largest cargo container."""
+    cargo_invs = [
+        m for m in _INV_RE.finditer(ship_block)
+        if _is_cargo_inv(ship_block, m)
+    ]
+    if not cargo_invs:
+        return ship_block
 
-    if best_match is None:
-        return ship_block  # no inv block found, give up
-
-    # Detect indentation from existing <s> tags in that block
-    s_m = re.search(r'(\s+)<s\s+elementaryId=', best_match.group(1))
+    best = max(cargo_invs, key=lambda m: len(re.findall(r'elementaryId="\d+"', m.group(1))))
+    s_m = re.search(r'(\s+)<s\s+elementaryId=', best.group(1))
     indent = s_m.group(1) if s_m else '\n\t\t\t\t\t\t\t\t'
     new_tag = f'{indent}<s elementaryId="{eid}" inStorage="{value}" onTheWayIn="0" onTheWayOut="0"/>'
-
-    # Insert before </inv> of the chosen block
-    insert_at = best_match.end(1)  # position of </inv> relative to ship_block start
+    insert_at = best.end(1)
     return ship_block[:insert_at] + new_tag + ship_block[insert_at:]
 
 
 def set_resource(content: str, ship_start: int, ship_end: int,
                  eid: int, new_value: int) -> tuple[str, bool]:
+    """Set the total inStorage for eid across all CARGO containers.
+
+    Machine buffer amounts are never modified.
+    """
     ship_block = content[ship_start:ship_end]
+    cargo_ranges = _cargo_inv_ranges(ship_block)
     pattern = re.compile(
         r'(<s\s+elementaryId="{}")\s+(inStorage=")(\d+)(")'.format(eid)
     )
-    matches = list(pattern.finditer(ship_block))
+    matches = [
+        m for m in pattern.finditer(ship_block)
+        if _in_cargo(m.start(), cargo_ranges)
+    ]
 
     if not matches:
         new_ship = _insert_resource(ship_block, eid, new_value)
@@ -219,6 +276,10 @@ def set_resource(content: str, ship_start: int, ship_end: int,
     return content[:ship_start] + new_ship + content[ship_end:], False
 
 
+# ---------------------------------------------------------------------------
+# UI helpers
+# ---------------------------------------------------------------------------
+
 def print_section(titulo: str, inventario: dict[int, int], filter_ids: set[int] | None = None):
     print(f"\n  {'─' * 42}")
     print(f"  {titulo}")
@@ -233,27 +294,8 @@ def print_section(titulo: str, inventario: dict[int, int], filter_ids: set[int] 
         print(f"  [{eid:>5}]  {label:<35}  {qty:>6}")
 
 
-def cmd_buscar():
-    print("\n  Buscar recurso por nombre (ej: 'fertilizante', 'acero', 'agua'):")
-    print("  > ", end="")
-    try:
-        query = input().strip()
-    except EOFError:
-        return
-    results = buscar_por_nombre(query)
-    if not results:
-        print("  Sin resultados.")
-    else:
-        for eid, es, en in sorted(results, key=lambda x: x[1]):
-            print(f"  [{eid:>5}]  {es}  ({en})")
-
-
 def edit_loop(content: str, ship_start: int, ship_end: int,
               inventario: dict[int, int]) -> tuple[str, bool]:
-    """
-    Interactive edit loop. Returns (new_content, changed).
-    Stays in loop until user types 0.
-    """
     changed = False
     print()
     print("  ID para editar | 'b' buscar | 'c' créditos | '0' terminar")
@@ -334,6 +376,10 @@ def edit_loop(content: str, ship_start: int, ship_end: int,
     return content, changed
 
 
+# ---------------------------------------------------------------------------
+# Save selection
+# ---------------------------------------------------------------------------
+
 def list_saves(base: Path) -> list[tuple[Path, str, str]]:
     saves = []
     for slot in sorted(base.iterdir()):
@@ -385,6 +431,10 @@ def select_save() -> Path:
             return saves[choice - 1][0]
         print("  Opción inválida.")
 
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
 
 def main():
     save_path = select_save()
