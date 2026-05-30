@@ -74,35 +74,35 @@ RECURSOS: dict[int, tuple[str, str]] = {
     4006: ("Estimulante de combate",        "Combat Stimulant"),
     4007: ("Venda",                         "Bandage"),
     4020: ("Estimulante de ánimo",          "Mood Stimulant"),
-    4022: ("CSP",                           "CSP"),
+    4022: ("PSN",                            "CSP"),
     4025: ("Enzima alienígena",             "Alien Enzyme"),
     4030: ("Vendaje de nanobots",           "Nano Wound Dressing"),
     4035: ("Jeringa sedante",               "Sedative Syringe"),
     # Armas
-    725:  ("Rifle de asalto",               "Rifle"),
+    725:  ("Fusil",                           "Rifle"),
     728:  ("Subfusil",                      "SMG"),
     729:  ("Escopeta",                      "Shotgun"),
     746:  ("Granada",                       "Grenade"),
     760:  ("Pistola",                       "Pistol"),
     1021: ("Fusil de francotirador",        "Sniper Rifle"),
-    1152: ("Torreta X1",                    "Sentry Gun X1"),
+    1152: ("Arma centinela X1",              "Sentry Gun X1"),
     2715: ("Munición explosiva",            "Explosive Ammunition"),
-    3069: ("Rifle láser",                   "Laser Rifle"),
+    3069: ("Fusil láser",                   "Laser Rifle"),
     3070: ("Pistola láser",                 "Laser Pistol"),
-    3071: ("Clustergun de plasma",          "Plasma Clustergun"),
-    3072: ("Rifle de plasma",               "Plasma Rifle"),
-    3956: ("Subfusil (M2)",                 "SMG"),
+    3071: ("Fusil de racimo plasmático",    "Plasma Clustergun"),
+    3072: ("Fusil de plasma",               "Plasma Rifle"),
+    3956: ("Subfusil",                      "SMG"),
     3960: ("Lanzallamas",                   "Flamethrower"),
-    3961: ("Rifle aturdidor",               "Stun Rifle"),
+    3961: ("Fusil aturdidor",               "Stun Rifle"),
     3962: ("Pistola aturdidora",            "Stun Pistol"),
     3967: ("Lanzagranadas explosivo",       "Explosive Grenade Launcher"),
-    4040: ("Carga de brecha",               "Small Breaching Charge"),
+    4040: ("Carga explosiva pequeña",        "Small Breaching Charge"),
     4076: ("Lanzagranadas incendiario",     "Incendiary Grenade Launcher"),
-    4533: ("Subfusil (M3)",                 "SMG"),
+    4533: ("Subfusil",                      "SMG"),
     # Accesorios de armas
-    3968: ("Mira básica",                   "Basic Scope"),
+    3968: ("Visor básico",                  "Basic Scope"),
     3969: ("Empuñadura táctica",            "Tactical Grip"),
-    3975: ("Autocargador de escopeta",      "Shotgun Autoloader"),
+    3975: ("Cargador automático de escopeta", "Shotgun Autoloader"),
     # Equipo y ropa
     481:  ("Sombrero",                      "Hat"),
     488:  ("Gafas de sol",                  "Sunglasses"),
@@ -131,23 +131,23 @@ ARMAS_IDS       = {725, 728, 729, 746, 760, 1021, 1152, 2715, 3069, 3070, 3071, 
                    3968, 3969, 3975}
 EQUIPO_IDS      = {481, 488, 3383, 3384, 3386, 3387, 3388, 3630, 4065, 1733, 2419}
 
-# sk= (saveNR from Job$SkillClass bytecode) → English skill name
+# sk= (saveNR from Job$SkillClass bytecode) → Spanish skill name
 # Source: javap -verbose Job$SkillClass.class (static initializer)
 HABILIDADES: dict[int, str] = {
-    2:  "Mining",
-    3:  "Botany",
-    4:  "Construct",
-    5:  "Industry",
-    6:  "Medical",
-    7:  "Gunner",
-    8:  "Shielding",
-    9:  "Operations",
-    10: "Weapons",
-    12: "Logistics",
-    13: "Chemical",
-    14: "Navigation",
-    16: "Research",
-    22: "Piloting",
+    2:  "Minería",
+    3:  "Botánica",
+    4:  "Construcción",
+    5:  "Industria",
+    6:  "Medicina",
+    7:  "Artillero",
+    8:  "Escudos",
+    9:  "Operaciones",
+    10: "Armas",
+    12: "Logística",
+    13: "Química",
+    14: "Navegación",
+    16: "Investigación",
+    22: "Pilotaje",
 }
 
 # attribute id= (name_tid from PersonalitySetting$AttributeType) → English name
@@ -609,6 +609,24 @@ def set_char_name(char_block: str, name: str, lname: str) -> str:
     s = re.sub(r'(\bname=")([^"]*)', lambda m: f'{m.group(1)}{name}', char_block, count=1)
     s = re.sub(r'(\blname=")([^"]*)', lambda m: f'{m.group(1)}{lname}', s, count=1)
     return s
+
+
+# ---------------------------------------------------------------------------
+# Character loadout read
+# ---------------------------------------------------------------------------
+
+def get_char_loadout(char_block: str) -> dict[str, int]:
+    """Parse <loadout> slot assignments from a character block."""
+    m = re.search(r'<loadout\s+([^/]*)/?>', char_block)
+    if not m:
+        return {}
+    attrs_str = m.group(1)
+    result: dict[str, int] = {}
+    for key in ('headgear', 'armor', 'primary', 'attachment',
+                'secondary', 'pocket1', 'pocket2', 'pocket3'):
+        km = re.search(rf'{key}="(\d+)"', attrs_str)
+        result[key] = int(km.group(1)) if km else 0
+    return result
 
 
 # ---------------------------------------------------------------------------
