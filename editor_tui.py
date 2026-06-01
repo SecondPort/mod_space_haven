@@ -79,6 +79,61 @@ def _slot_name(eid: int) -> str:
 # ─────────────────────────────────────────────────────────────────────────────
 
 
+class AddResourceModal(ModalScreen):
+    DEFAULT_CSS = """
+    AddResourceModal { align: center middle; }
+    #ar-box {
+        width: 64; height: 32;
+        background: $surface; border: solid $primary; padding: 1 2;
+    }
+    #ar-search { margin-bottom: 1; }
+    #ar-tbl { height: 1fr; }
+    #ar-hint { color: $text-muted; margin-top: 1; }
+    """
+    BINDINGS = [Binding("escape", "cancel", "Cancelar")]
+
+    def compose(self) -> ComposeResult:
+        with Vertical(id="ar-box"):
+            yield Label("[bold]Agregar recurso al cargo[/bold]")
+            yield Input(placeholder="Buscar por nombre o ID…", id="ar-search")
+            yield DataTable(id="ar-tbl", cursor_type="row", zebra_stripes=True)
+            yield Label("Enter: seleccionar   Esc: cancelar", id="ar-hint")
+
+    def on_mount(self) -> None:
+        t = self.query_one("#ar-tbl", DataTable)
+        t.add_column("ID", width=7)
+        t.add_column("Nombre", width=44)
+        self._populate("")
+        self.query_one("#ar-search", Input).focus()
+
+    def _populate(self, query: str) -> None:
+        t = self.query_one("#ar-tbl", DataTable)
+        t.clear()
+        q = query.lower()
+        for eid, (name_es, name_en) in sorted(RECURSOS.items(), key=lambda x: x[1][0].lower()):
+            if q and q not in name_es.lower() and q not in name_en.lower() and q not in str(eid):
+                continue
+            t.add_row(str(eid), name_es, key=f"r-{eid}")
+
+    @on(Input.Changed, "#ar-search")
+    def _filter(self, event: Input.Changed) -> None:
+        self._populate(event.value)
+
+    @on(Input.Submitted, "#ar-search")
+    def _focus_table(self) -> None:
+        self.query_one("#ar-tbl", DataTable).focus()
+
+    @on(DataTable.RowSelected, "#ar-tbl")
+    def _select(self, event: DataTable.RowSelected) -> None:
+        key = str(event.row_key.value or "")
+        if not key.startswith("r-"):
+            return
+        self.dismiss(int(key[2:]))
+
+    def action_cancel(self) -> None:
+        self.dismiss(None)
+
+
 class EditValueModal(ModalScreen):
     DEFAULT_CSS = """
     EditValueModal { align: center middle; }
@@ -236,11 +291,15 @@ class CargoPanel(Static):
     CargoPanel {
         height: 1fr;
         padding: 0;
+        layout: vertical;
     }
+    #cp-controls { height: 3; padding: 0 1; align-vertical: middle; }
     CargoPanel DataTable { height: 1fr; }
     """
 
     def compose(self) -> ComposeResult:
+        with Horizontal(id="cp-controls"):
+            yield Button("+ Agregar recurso", id="cp-add", variant="primary")
         with ScrollableContainer():
             yield DataTable(id="cargo-tbl", cursor_type="row", zebra_stripes=True)
 
@@ -296,6 +355,19 @@ class CargoPanel(Static):
         action = "insertado" if inserted else "actualizado"
         app.notify(f"{nombre(eid)} {action}: {old:,} → {new_val:,}")
         self.refresh_data()
+
+    @on(Button.Pressed, "#cp-add")
+    def _open_add(self) -> None:
+        self.app.push_screen(AddResourceModal(), self._after_search)  # type: ignore[union-attr]
+
+    def _after_search(self, eid: int | None) -> None:
+        if eid is None:
+            return
+        cur = self.app.inventario.get(eid, 0)  # type: ignore[union-attr]
+        self.app.push_screen(  # type: ignore[union-attr]
+            EditValueModal(nombre(eid), cur),
+            lambda v: self._apply(eid, cur, v),
+        )
 
 
 class WeaponsPanel(Static):
