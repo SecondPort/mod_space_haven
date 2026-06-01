@@ -36,6 +36,7 @@ from editor import (
     add_char_trait,
     backup_save,
     complete_tech,
+    expected_savegames_dirs,
     find_character_bounds,
     find_player_characters,
     find_player_ship_bounds,
@@ -191,6 +192,19 @@ class SaveSelectScreen(Screen):
             yield Label("Enter: seleccionar   q: salir", classes="ss-note")
 
     def on_mount(self) -> None:
+        if SAVEGAMES_DIR is None:
+            missing = "\n".join(f"  • {path}" for path in expected_savegames_dirs())
+            self.query_one("#ss-box", Vertical).mount(
+                Label(
+                    "No se encontró el directorio de saves.\n\n"
+                    f"Rutas buscadas:\n{missing}\n\n"
+                    "Tip: configurá SPACEHAVEN_SAVEGAMES_DIR con la ruta correcta.",
+                    classes="ss-note",
+                )
+            )
+            self.query_one("#ss-list", ListView).focus()
+            return
+
         self._saves = list_saves(SAVEGAMES_DIR)
         lv = self.query_one("#ss-list", ListView)
         if not self._saves:

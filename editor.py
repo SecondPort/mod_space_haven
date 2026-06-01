@@ -4,10 +4,53 @@
 import re
 import sys
 import shutil
+import os
 from pathlib import Path
 from datetime import datetime
 
-SAVEGAMES_DIR = Path("/mnt/f/Steam/steamapps/common/SpaceHaven/savegames")
+SPACEHAVEN_RELATIVE_SAVE_PATH = Path("steamapps/common/SpaceHaven/savegames")
+
+
+def _candidate_save_dirs() -> list[Path]:
+    candidates: list[Path] = []
+
+    env_path = os.environ.get("SPACEHAVEN_SAVEGAMES_DIR", "").strip()
+    if env_path:
+        candidates.append(Path(env_path).expanduser())
+
+    home = Path.home()
+    candidates.extend([
+        home / ".local/share/Steam" / SPACEHAVEN_RELATIVE_SAVE_PATH,
+        home / ".steam/steam" / SPACEHAVEN_RELATIVE_SAVE_PATH,
+        home / ".var/app/com.valvesoftware.Steam/.local/share/Steam" / SPACEHAVEN_RELATIVE_SAVE_PATH,
+    ])
+
+    mnt_root = Path("/mnt")
+    if mnt_root.exists():
+        for drive in sorted(mnt_root.iterdir()):
+            candidates.append(drive / "Steam" / SPACEHAVEN_RELATIVE_SAVE_PATH)
+
+    deduped: list[Path] = []
+    seen: set[Path] = set()
+    for path in candidates:
+        if path not in seen:
+            deduped.append(path)
+            seen.add(path)
+    return deduped
+
+
+def detect_savegames_dir() -> Path | None:
+    for candidate in _candidate_save_dirs():
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def expected_savegames_dirs() -> list[Path]:
+    return _candidate_save_dirs()
+
+
+SAVEGAMES_DIR = detect_savegames_dir()
 
 # eid → (nombre_ES, nombre_EN)
 # Extracted from spacehaven.jar: library/haven + library/texts
@@ -1080,6 +1123,8 @@ def edit_research_loop(content: str) -> tuple[str, bool]:
 # ---------------------------------------------------------------------------
 
 def list_saves(base: Path) -> list[tuple[Path, str, str]]:
+    if not base.exists():
+        return []
     saves = []
     for slot in sorted(base.iterdir()):
         game = slot / "save" / "game"
@@ -1100,8 +1145,12 @@ def list_saves(base: Path) -> list[tuple[Path, str, str]]:
 
 
 def select_save() -> Path:
-    if not SAVEGAMES_DIR.exists():
-        print(f"Directorio de saves no encontrado: {SAVEGAMES_DIR}")
+    if SAVEGAMES_DIR is None:
+        print("Directorio de saves no encontrado.")
+        print("\nRutas buscadas:")
+        for path in expected_savegames_dirs():
+            print(f"  - {path}")
+        print("\nTip: configurá SPACEHAVEN_SAVEGAMES_DIR con la ruta correcta.")
         sys.exit(1)
     saves = list_saves(SAVEGAMES_DIR)
     if not saves:
