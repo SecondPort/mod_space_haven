@@ -1,9 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "mode-haven"
 version = "0.1.0"
-description = "Add your description here"
+description = "Terminal save editor for Space Haven"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 dependencies = [
     "textual>=8.2.7",
 ]
+
+[project.scripts]
+mode-haven = "main:main"
+
+[tool.setuptools]
+py-modules = ["main", "editor", "editor_tui"]
