@@ -1,114 +1,153 @@
 # Mode Haven
 
-Terminal-first save editor for **Space Haven** written in Python.
+Python terminal save editor for Space Haven.
 
-It lets you open an existing save, create a backup, and edit common data such as cargo, credits, characters, and research.
+This project is meant to be usable from a local terminal on a regular computer, with a simple `.venv` setup and no external services.
 
 ## Quick start
 
-### 1. Clone the repository
+### Option A: install dependencies with `requirements.txt`
 
 ```bash
 git clone https://github.com/SecondPort/mode_space_haven.git
 cd mode_space_haven
-```
-
-### 2. Create a virtual environment
-
-```bash
 python3 -m venv .venv
 source .venv/bin/activate
+pip install -r requirements.txt
+python main.py
 ```
 
-### 3. Install the project
+CLI mode:
 
 ```bash
+python main.py --cli
+```
+
+### Option B: install as a local command
+
+```bash
+git clone https://github.com/SecondPort/mode_space_haven.git
+cd mode_space_haven
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -e .
-```
-
-### 4. Run it
-
-Text UI mode:
-
-```bash
 mode-haven
 ```
 
-Classic terminal mode:
+CLI mode:
 
 ```bash
 mode-haven --cli
 ```
 
-You can also run it directly with Python:
+## What it does
 
-```bash
-python main.py
-python main.py --cli
-```
+The editor opens an existing Space Haven save, creates a backup before writing, and lets you modify common game data from the terminal.
 
-## What it can edit
+You can edit:
 
-- Credits
-- Cargo and resources
-- Character stats
-- Character skills
-- Character attributes
-- Character traits
-- Character names
-- Character loadout
-- Research progress
+- credits
+- cargo and resources
+- character stats
+- character skills
+- character attributes
+- character traits
+- character names
+- character loadout
+- research progress
 
-## How save discovery works
+## Save folder detection
 
-The tool tries to find the save directory automatically.
+The app tries to detect the save directory automatically in this order:
 
-Current built-in search paths are:
+1. `SPACEHAVEN_SAVEGAMES_DIR`
+2. `~/.local/share/Steam/steamapps/common/SpaceHaven/savegames`
+3. `~/.steam/steam/steamapps/common/SpaceHaven/savegames`
+4. `~/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common/SpaceHaven/savegames`
+5. `/mnt/*/Steam/steamapps/common/SpaceHaven/savegames`
 
-- `SPACEHAVEN_SAVEGAMES_DIR` if the environment variable is set
-- `~/.local/share/Steam/steamapps/common/SpaceHaven/savegames`
-- `~/.steam/steam/steamapps/common/SpaceHaven/savegames`
-- `~/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common/SpaceHaven/savegames`
-- `/mnt/*/Steam/steamapps/common/SpaceHaven/savegames`
-
-If your saves are somewhere else, set the environment variable before running the app:
+If your saves live somewhere else:
 
 ```bash
 export SPACEHAVEN_SAVEGAMES_DIR="/path/to/your/savegames"
-mode-haven
+python main.py
 ```
 
-## Safety
+## Run modes
 
-- Close the game before editing a save.
-- The editor creates a timestamped backup before writing changes.
-- Backup files use the format `game.bak_YYYYMMDD_HHMMSS`.
+### TUI mode
+
+Default mode. Uses Textual for a richer terminal interface.
+
+```bash
+python main.py
+```
+
+### Classic CLI mode
+
+Simple interactive terminal flow.
+
+```bash
+python main.py --cli
+```
 
 ## Requirements
 
-- Python 3.10+
-- A terminal
-- `textual` for the TUI mode, installed automatically by `pip install -e .`
+- Python 3.10 or newer
+- a local terminal
+- Space Haven save files on your machine
 
-## Project files
+Direct dependency:
+
+- `textual==8.2.7`
+
+## Safety
+
+- Close the game before editing saves.
+- The editor creates a timestamped backup before writing changes.
+- Backups use the format `game.bak_YYYYMMDD_HHMMSS`.
+- This project edits existing saves only. It does not repair corrupted save files.
+
+## Project structure
 
 - `main.py` — launcher for TUI and CLI modes
 - `editor.py` — classic terminal editor
-- `editor_tui.py` — Textual-based terminal UI
+- `editor_tui.py` — Textual terminal UI
+- `requirements.txt` — dependency install for `.venv` workflow
+- `pyproject.toml` — package metadata and console script definition
 
-## Known limitations
+## Public repository status
 
-- Save auto-discovery is focused on the paths listed above.
-- The project edits existing saves; it does not validate or repair corrupted save files.
-- This repository does not ship any game assets or saves.
+I reviewed the repository to prepare it for public use.
 
-## Public repository note
+Current public-safety status:
 
-This repository is intended to be safe to publish:
-
-- no secrets are required to run it
-- no API keys are used
+- no API keys are required
+- no tokens are required
+- no private keys are included
 - no save files are included
-- local agent metadata is ignored from version control
+- local agent metadata was removed from tracked files
+- local backups and environment files are ignored in `.gitignore`
 
-If you plan to contribute, avoid committing personal save files, virtual environments, or backup files.
+## What this repository does not include
+
+- Space Haven game files
+- personal save files
+- cloud services
+- server-side components
+
+## Recommended local setup
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+python main.py
+```
+
+## Notes
+
+- If `textual` is missing, install dependencies again inside the active virtual environment.
+- If the save folder is not detected, set `SPACEHAVEN_SAVEGAMES_DIR` manually.
+- If you want the command `mode-haven`, install with `pip install -e .`.
