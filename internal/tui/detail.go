@@ -248,7 +248,7 @@ func (m *Model) promptForStat(key string) {
 	m.overlay.openPrompt(
 		stat+" (0-"+strconv.Itoa(ceiling)+")",
 		m.txt.KeysModal,
-		strconv.Itoa(maxInt(current, 0)),
+		strconv.Itoa(max(current, 0)),
 		true,
 		intent{kind: intentStat, entID: m.detail.entID, stat: stat, previous: current},
 	)
@@ -344,11 +344,4 @@ func (m Model) viewDetail() string {
 		lipgloss.NewStyle().Padding(0, 1).Render(lipgloss.JoinVertical(lipgloss.Left, title, "", body)),
 		m.footer(keys),
 	)
-}
-
-func maxInt(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
 }

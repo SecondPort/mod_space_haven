@@ -356,13 +356,6 @@ func (e *editorState) resize(width, height int) {
 	}
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
 // activeGrid is the panel the keyboard is driving right now.
 func (e *editorState) activeGrid() *grid {
 	switch e.section {

@@ -36,7 +36,7 @@ Or install it onto your `PATH`:
 go install github.com/SecondPort/mod_space_haven/cmd/modhaven@latest
 ```
 
-Requires Go 1.24 or newer to build. The finished binary requires nothing.
+Requires Go 1.24.2 or newer to build. The finished binary requires nothing.
 
 ### Prebuilt binaries
 

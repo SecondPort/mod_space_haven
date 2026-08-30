@@ -1,6 +1,6 @@
 module github.com/SecondPort/mod_space_haven
 
-go 1.27.0
+go 1.24.2
 
 require (
 	github.com/charmbracelet/bubbles v1.0.0
