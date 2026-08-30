@@ -20,6 +20,22 @@ writes it back.
                     │  157      Metales básicos            150
 ```
 
+## Status
+
+Working and tested, with one honest gap: the test suite runs against a fixture
+reconstructed from the save format, not against a save this project has been
+able to verify end to end. Two inferences carry the most risk — the shape of a
+research entry, and the settlement → `createdShipId` → `<ship>` lookup that
+finds your hull.
+
+So before you trust it with a colony you care about: make an edit, load the
+save, and check the game agrees. Every write is backed up first, and if the
+editor reads something wrong, the
+[save-not-read-correctly report](https://github.com/SecondPort/mod_space_haven/issues/new/choose)
+is the most useful thing you can send.
+
+There is no tagged release yet, so build from source for now.
+
 ## Install
 
 ### From source
@@ -40,8 +56,9 @@ Requires Go 1.24.2 or newer to build. The finished binary requires nothing.
 
 ### Prebuilt binaries
 
-Grab one from the [releases page](https://github.com/SecondPort/mod_space_haven/releases)
-and check it against the published `checksums.txt`. Or build them all yourself:
+Once a version is tagged, binaries appear on the
+[releases page](https://github.com/SecondPort/mod_space_haven/releases) with a
+`checksums.txt` to verify them against. Until then, build them yourself:
 
 ```bash
 make release    # dist/modhaven_{linux,darwin,windows}_{amd64,arm64}
