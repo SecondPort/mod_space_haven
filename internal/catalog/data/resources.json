@@ -1,0 +1,477 @@
+[
+  {
+    "id": 15,
+    "es": "Hortalizas de raíz",
+    "en": "Root Vegetables"
+  },
+  {
+    "id": 16,
+    "es": "Agua",
+    "en": "Water"
+  },
+  {
+    "id": 40,
+    "es": "Hielo",
+    "en": "Ice"
+  },
+  {
+    "id": 71,
+    "es": "Biomateria",
+    "en": "Bio Matter"
+  },
+  {
+    "id": 157,
+    "es": "Metales básicos",
+    "en": "Base Metals"
+  },
+  {
+    "id": 158,
+    "es": "Energio",
+    "en": "Energium"
+  },
+  {
+    "id": 162,
+    "es": "Infrabloques",
+    "en": "Infrablock"
+  },
+  {
+    "id": 169,
+    "es": "Metales nobles",
+    "en": "Noble Metals"
+  },
+  {
+    "id": 170,
+    "es": "Carbono",
+    "en": "Carbon"
+  },
+  {
+    "id": 171,
+    "es": "Sustancias químicas",
+    "en": "Raw Chemicals"
+  },
+  {
+    "id": 172,
+    "es": "Hiperio",
+    "en": "Hyperium"
+  },
+  {
+    "id": 173,
+    "es": "Componentes electrónicos",
+    "en": "Electronics Component"
+  },
+  {
+    "id": 174,
+    "es": "Barras de energía",
+    "en": "Energy Rod"
+  },
+  {
+    "id": 175,
+    "es": "Plásticos",
+    "en": "Plastics"
+  },
+  {
+    "id": 176,
+    "es": "Productos químicos",
+    "en": "Chemicals"
+  },
+  {
+    "id": 177,
+    "es": "Tejidos",
+    "en": "Fabrics"
+  },
+  {
+    "id": 178,
+    "es": "Hipercombustible",
+    "en": "Hyperfuel"
+  },
+  {
+    "id": 179,
+    "es": "Comida procesada",
+    "en": "Processed Food"
+  },
+  {
+    "id": 481,
+    "es": "Sombrero",
+    "en": "Hat"
+  },
+  {
+    "id": 488,
+    "es": "Gafas de sol",
+    "en": "Sunglasses"
+  },
+  {
+    "id": 706,
+    "es": "Frutas",
+    "en": "Fruits"
+  },
+  {
+    "id": 707,
+    "es": "Carne artificial",
+    "en": "Artificial Meat"
+  },
+  {
+    "id": 712,
+    "es": "Comida espacial",
+    "en": "Space Food"
+  },
+  {
+    "id": 725,
+    "es": "Fusil",
+    "en": "Rifle"
+  },
+  {
+    "id": 728,
+    "es": "Subfusil",
+    "en": "SMG"
+  },
+  {
+    "id": 729,
+    "es": "Escopeta",
+    "en": "Shotgun"
+  },
+  {
+    "id": 746,
+    "es": "Granada",
+    "en": "Grenade"
+  },
+  {
+    "id": 760,
+    "es": "Pistola",
+    "en": "Pistol"
+  },
+  {
+    "id": 930,
+    "es": "Tecnobloques",
+    "en": "Techblock"
+  },
+  {
+    "id": 984,
+    "es": "Carne de monstruo",
+    "en": "Monster Meat"
+  },
+  {
+    "id": 985,
+    "es": "Carne humana",
+    "en": "Human Meat"
+  },
+  {
+    "id": 1021,
+    "es": "Fusil de francotirador",
+    "en": "Sniper Rifle"
+  },
+  {
+    "id": 1152,
+    "es": "Arma centinela X1",
+    "en": "Sentry Gun X1"
+  },
+  {
+    "id": 1733,
+    "es": "Extintor",
+    "en": "Fire Extinguisher"
+  },
+  {
+    "id": 1759,
+    "es": "Cascobloques",
+    "en": "Hull Block"
+  },
+  {
+    "id": 1858,
+    "es": "Créditos",
+    "en": "Credits"
+  },
+  {
+    "id": 1873,
+    "es": "Infrarresiduos",
+    "en": "Infra Scrap"
+  },
+  {
+    "id": 1874,
+    "es": "Residuos blandos",
+    "en": "Soft Scrap"
+  },
+  {
+    "id": 1886,
+    "es": "Restos de casco",
+    "en": "Hull Scrap"
+  },
+  {
+    "id": 1919,
+    "es": "Energibloques",
+    "en": "Energy Block"
+  },
+  {
+    "id": 1920,
+    "es": "Superbloques",
+    "en": "Superblock"
+  },
+  {
+    "id": 1921,
+    "es": "Blandibloques",
+    "en": "Soft Block"
+  },
+  {
+    "id": 1922,
+    "es": "Placas de acero",
+    "en": "Steel Plates"
+  },
+  {
+    "id": 1924,
+    "es": "Componentes optoelectrónicos",
+    "en": "Optronics Component"
+  },
+  {
+    "id": 1925,
+    "es": "Componentes cuantrónicos",
+    "en": "Quantronics Component"
+  },
+  {
+    "id": 1926,
+    "es": "Células de energía",
+    "en": "Energy Cell"
+  },
+  {
+    "id": 1932,
+    "es": "Fibras",
+    "en": "Fibers"
+  },
+  {
+    "id": 1946,
+    "es": "Tecnorresiduos",
+    "en": "Tech Scrap"
+  },
+  {
+    "id": 1947,
+    "es": "Residuos energéticos",
+    "en": "Energy Scrap"
+  },
+  {
+    "id": 2053,
+    "es": "Suministros médicos",
+    "en": "Medical Supplies"
+  },
+  {
+    "id": 2058,
+    "es": "Líquido intravenoso",
+    "en": "IV Fluid"
+  },
+  {
+    "id": 2419,
+    "es": "Utensilio de limpieza",
+    "en": "Cleaning Tool"
+  },
+  {
+    "id": 2475,
+    "es": "Fertilizante",
+    "en": "Fertilizer"
+  },
+  {
+    "id": 2657,
+    "es": "Frutos secos",
+    "en": "Nuts and Seeds"
+  },
+  {
+    "id": 2715,
+    "es": "Munición explosiva",
+    "en": "Explosive Ammunition"
+  },
+  {
+    "id": 2797,
+    "es": "Collar de esclavo",
+    "en": "Slave Collar"
+  },
+  {
+    "id": 3069,
+    "es": "Fusil láser",
+    "en": "Laser Rifle"
+  },
+  {
+    "id": 3070,
+    "es": "Pistola láser",
+    "en": "Laser Pistol"
+  },
+  {
+    "id": 3071,
+    "es": "Fusil de racimo plasmático",
+    "en": "Plasma Clustergun"
+  },
+  {
+    "id": 3072,
+    "es": "Fusil de plasma",
+    "en": "Plasma Rifle"
+  },
+  {
+    "id": 3366,
+    "es": "Bebida alcohólica suave",
+    "en": "Mild Alcohol"
+  },
+  {
+    "id": 3378,
+    "es": "Cereales y lúpulos",
+    "en": "Grains and Hops"
+  },
+  {
+    "id": 3383,
+    "es": "Chaleco antibalas",
+    "en": "Bulletproof Vest"
+  },
+  {
+    "id": 3384,
+    "es": "Chaleco blindado",
+    "en": "Armored Vest"
+  },
+  {
+    "id": 3386,
+    "es": "Control remoto",
+    "en": "Remote Control"
+  },
+  {
+    "id": 3387,
+    "es": "Generador de oxígeno portátil",
+    "en": "Oxygen Generator"
+  },
+  {
+    "id": 3388,
+    "es": "Tanque de oxígeno",
+    "en": "Oxygen Tank"
+  },
+  {
+    "id": 3419,
+    "es": "Partes de aumentos",
+    "en": "Augmentation Parts"
+  },
+  {
+    "id": 3512,
+    "es": "Mineral exótico",
+    "en": "Exotic Ore"
+  },
+  {
+    "id": 3513,
+    "es": "Mineral básico",
+    "en": "Basic Ore"
+  },
+  {
+    "id": 3630,
+    "es": "Extensor de O2 para traje",
+    "en": "Space Suit Oxygen Extender"
+  },
+  {
+    "id": 3728,
+    "es": "Fragmento de código",
+    "en": "Code Fragment"
+  },
+  {
+    "id": 3925,
+    "es": "PMI",
+    "en": "ISP"
+  },
+  {
+    "id": 3956,
+    "es": "Subfusil",
+    "en": "SMG"
+  },
+  {
+    "id": 3960,
+    "es": "Lanzallamas",
+    "en": "Flamethrower"
+  },
+  {
+    "id": 3961,
+    "es": "Fusil aturdidor",
+    "en": "Stun Rifle"
+  },
+  {
+    "id": 3962,
+    "es": "Pistola aturdidora",
+    "en": "Stun Pistol"
+  },
+  {
+    "id": 3967,
+    "es": "Lanzagranadas explosivo",
+    "en": "Explosive Grenade Launcher"
+  },
+  {
+    "id": 3968,
+    "es": "Visor básico",
+    "en": "Basic Scope"
+  },
+  {
+    "id": 3969,
+    "es": "Empuñadura táctica",
+    "en": "Tactical Grip"
+  },
+  {
+    "id": 3975,
+    "es": "Cargador automático de escopeta",
+    "en": "Shotgun Autoloader"
+  },
+  {
+    "id": 4005,
+    "es": "Analgésicos",
+    "en": "Painkillers"
+  },
+  {
+    "id": 4006,
+    "es": "Estimulante de combate",
+    "en": "Combat Stimulant"
+  },
+  {
+    "id": 4007,
+    "es": "Venda",
+    "en": "Bandage"
+  },
+  {
+    "id": 4020,
+    "es": "Estimulante de ánimo",
+    "en": "Mood Stimulant"
+  },
+  {
+    "id": 4022,
+    "es": "PSN",
+    "en": "CSP"
+  },
+  {
+    "id": 4025,
+    "es": "Enzima alienígena",
+    "en": "Alien Enzyme"
+  },
+  {
+    "id": 4027,
+    "es": "Órganos alienígenas",
+    "en": "Alien Organs"
+  },
+  {
+    "id": 4028,
+    "es": "Órganos humanos",
+    "en": "Human Organs"
+  },
+  {
+    "id": 4030,
+    "es": "Vendaje de nanobots",
+    "en": "Nano Wound Dressing"
+  },
+  {
+    "id": 4035,
+    "es": "Jeringa sedante",
+    "en": "Sedative Syringe"
+  },
+  {
+    "id": 4040,
+    "es": "Carga explosiva pequeña",
+    "en": "Small Breaching Charge"
+  },
+  {
+    "id": 4065,
+    "es": "Extensor de O2 para traje (M2)",
+    "en": "Space Suit Oxygen Extender"
+  },
+  {
+    "id": 4076,
+    "es": "Lanzagranadas incendiario",
+    "en": "Incendiary Grenade Launcher"
+  },
+  {
+    "id": 4533,
+    "es": "Subfusil",
+    "en": "SMG"
+  }
+]

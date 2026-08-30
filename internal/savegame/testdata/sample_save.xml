@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game version="1.0">
+	<playerBank ca="12500"/>
+	<settlements>
+		<settlement sid="9" isPlayer="false" shn="Pirate Den" createdShipId="12"/>
+		<settlement sid="7" isPlayer="true" shn="Nostromo" createdShipId="38"/>
+	</settlements>
+	<ships>
+		<ship sid="12" sname="Marauder">
+			<e>
+				<feat id="90">
+					<inv>
+						<s elementaryId="157" inStorage="999" onTheWayIn="0" onTheWayOut="0"/>
+					</inv>
+				</feat>
+			</e>
+		</ship>
+		<ship sid="38" sname="Nostromo">
+			<e>
+				<feat id="1">
+					<inv>
+						<s elementaryId="157" inStorage="100" onTheWayIn="0" onTheWayOut="0"/>
+						<s elementaryId="16" inStorage="40" onTheWayIn="0" onTheWayOut="0"/>
+					</inv>
+				</feat>
+				<feat id="2">
+					<prod>
+						<inv>
+							<s elementaryId="157" inStorage="7" onTheWayIn="0" onTheWayOut="0"/>
+						</inv>
+					</prod>
+				</feat>
+				<feat id="3">
+					<meta v="1"/>
+					<inv>
+						<s elementaryId="157" inStorage="50" onTheWayIn="0" onTheWayOut="0"/>
+					</inv>
+				</feat>
+				<shuttle>
+					<ship sid="77" sname="Nostromo Shuttle">
+						<e>
+							<feat id="4">
+								<inv>
+									<s elementaryId="178" inStorage="5" onTheWayIn="0" onTheWayOut="0"/>
+								</inv>
+							</feat>
+						</e>
+					</ship>
+				</shuttle>
+			</e>
+		</ship>
+	</ships>
+	<characters>
+		<c cid="1" entId="1001" side="Player" name="Ellen" lname="Ripley">
+			<pers>
+				<attr>
+					<a points="5" id="210"/>
+					<a points="3" id="213"/>
+				</attr>
+				<traits>
+					<t id="191"/>
+					<t id="1035"/>
+				</traits>
+			</pers>
+			<props>
+				<Health v="80"/>
+				<Mood v="55"/>
+				<Rest v="70"/>
+			</props>
+			<skills>
+				<s sk="2" level="3" mxn="5"/>
+				<s sk="4" level="7" mxn="9"/>
+			</skills>
+			<loadout headgear="481" armor="3383" primary="725" attachment="0" secondary="760" pocket1="0" pocket2="0" pocket3="0"/>
+		</c>
+		<c cid="2" entId="1002" side="Player" name="Arthur" lname="Dallas">
+			<pers>
+				<attr>
+					<a points="4" id="210"/>
+					<a points="6" id="214"/>
+				</attr>
+				<traits>
+					<t id="1041"/>
+				</traits>
+			</pers>
+			<props>
+				<Health v="100"/>
+				<Mood v="90"/>
+				<Rest v="100"/>
+			</props>
+			<skills>
+				<s sk="14" level="9" mxn="10"/>
+			</skills>
+			<loadout headgear="0" armor="0" primary="0" attachment="0" secondary="0" pocket1="0" pocket2="0" pocket3="0"/>
+		</c>
+		<c cid="3" entId="2001" side="Enemy" name="Xeno" lname="Morph">
+			<props>
+				<Health v="200"/>
+				<Mood v="0"/>
+				<Rest v="100"/>
+			</props>
+			<skills>
+				<s sk="10" level="10" mxn="10"/>
+			</skills>
+		</c>
+	</characters>
+	<research>
+		<l techId="2532">
+			<state done="false"/>
+			<blocksDone level1="0" level2="0" level3="0"/>
+		</l>
+		<l techId="2533">
+			<state done="true"/>
+			<blocksDone level1="180" level2="40" level3="12"/>
+		</l>
+		<l techId="2534">
+			<state done="false"/>
+			<blocksDone level1="0" level2="0" level3="0"/>
+		</l>
+	</research>
+</game>
