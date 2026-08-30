@@ -409,14 +409,34 @@ func TestRemoveCharacterTraitReportsAMissingTrait(t *testing.T) {
 func TestAddedTraitKeepsSurroundingIndentation(t *testing.T) {
 	s := load(t)
 
+	// Compare against a sibling rather than a hard-coded string: the assertion
+	// is that the new entry is laid out like the ones already there, whatever
+	// line endings the fixture happens to use.
+	want := indentBefore(string(s.Bytes()), `<t id="1035"/>`)
+	if want == "" {
+		t.Fatal("the fixture has no indented trait to compare against")
+	}
+
 	if err := s.AddCharacterTrait("1001", 1039); err != nil {
 		t.Fatalf("AddCharacterTrait: %v", err)
 	}
-	out := string(s.Bytes())
-	if !strings.Contains(out, "\t\t\t\t\t<t id=\"1039\"/>\n\t\t\t\t</traits>") {
-		idx := strings.Index(out, `<t id="1039"/>`)
-		t.Errorf("new trait not indented like its siblings: %q", out[idx-12:idx+22])
+
+	if got := indentBefore(string(s.Bytes()), `<t id="1039"/>`); got != want {
+		t.Errorf("new trait indented with %q, want %q like its siblings", got, want)
 	}
+}
+
+// indentBefore returns the whitespace run immediately before needle.
+func indentBefore(doc, needle string) string {
+	end := strings.Index(doc, needle)
+	if end < 0 {
+		return ""
+	}
+	start := end
+	for start > 0 && strings.ContainsRune(" \t\r\n", rune(doc[start-1])) {
+		start--
+	}
+	return doc[start:end]
 }
 
 func TestSetCharacterName(t *testing.T) {

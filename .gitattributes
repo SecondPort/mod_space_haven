@@ -1,0 +1,16 @@
+# Normalize line endings in the working tree to LF everywhere. This editor
+# reproduces a save byte for byte, so a checkout that silently rewrites line
+# endings changes what the code is reasoning about.
+* text=auto eol=lf
+
+# Save fixtures are compared byte for byte. Git must never touch them: on a
+# Windows checkout, CRLF conversion changes the indentation the tests assert on
+# and, worse, makes the fixture stop representing a real save file.
+internal/**/testdata/** -text
+
+# Binary assets.
+*.png binary
+
+# Generated reference data: keep it out of diff summaries so a table refresh
+# does not drown a review.
+internal/catalog/data/*.json linguist-generated=true
