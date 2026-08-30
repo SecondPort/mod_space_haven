@@ -15,8 +15,11 @@ coverage.html
 .DS_Store
 *.swp
 
-# Local tooling metadata
+# Local agent and tooling metadata — never tracked in the public repo
 .atl/
+.agents/
+.claude/
+skills-lock.json
 
 # Local save backups
 *.bak_*
