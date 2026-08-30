@@ -1,0 +1,86 @@
+name: Feature request
+description: Something the editor should be able to do
+title: "feat: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Good features start from a problem, not a solution. Tell us what you were
+        trying to do and where the editor got in the way.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before requesting
+      options:
+        - label: I searched the existing issues and this is not already requested.
+          required: true
+        - label: I have read the scope note at the bottom of this form.
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What you were trying to do, and what stopped you.
+      placeholder: |
+        I want to hand a crew member a specific rifle, but the loadout panel is
+        read-only, so I have to stock the cargo and hope they pick it up.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you would like to happen
+      description: Describe the behaviour. A key binding or a command line is fine.
+      placeholder: |
+        `modhaven set loadout 1001 primary 725`, and enter on a loadout row in
+        the Weapons panel.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where it belongs
+      options:
+        - Terminal interface (TUI)
+        - Command line
+        - Both
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What you tried instead
+      description: Workarounds you found, and why they are not enough.
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: What you know about the save format
+      description: |
+        If this touches new parts of the save, say which tags and attributes are
+        involved and where you learned that. An id nobody can trace is a guess,
+        and a guess in a save editor costs somebody a colony.
+      render: xml
+
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Would you like to build it?
+      options:
+        - label: I would like to open the pull request for this.
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Scope
+
+        This edits existing saves from the terminal. Things that are out of
+        scope: repairing corrupted saves, a graphical interface, anything that
+        talks to a server, and modifying the game's own files.

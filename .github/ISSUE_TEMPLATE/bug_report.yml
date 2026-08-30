@@ -1,0 +1,99 @@
+name: Bug report
+description: Something the editor got wrong
+title: "fix: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this.
+
+        **Please do not attach a real save file.** Saves hold your colony and
+        your file paths. Reduce it to the few tags that trigger the problem.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before reporting
+      options:
+        - label: I am on the latest release, or I built from the latest `main`.
+          required: true
+        - label: I searched the existing issues and this is not already reported.
+          required: true
+        - label: I am not attaching a real save file.
+          required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What the editor did, and what you expected instead.
+      placeholder: |
+        Setting base metals to 5000 wrote 2500 into two containers, but the
+        cargo screen kept showing 2500 as the total.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to reproduce
+      description: The shortest path from a fresh start to the problem.
+      placeholder: |
+        1. modhaven --dir ~/saves
+        2. Open slot1
+        3. Press enter on "Metales básicos"
+        4. Type 5000, press enter
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where did it happen
+      options:
+        - Terminal interface (TUI)
+        - Command line (modhaven <command>)
+        - Both
+        - Building from source
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `modhaven --version`.
+      placeholder: "modhaven v0.2.0"
+    validations:
+      required: true
+
+  - type: input
+    id: platform
+    attributes:
+      label: Operating system and terminal
+      placeholder: "Arch Linux, kitty 0.35 — or Windows 11, Windows Terminal"
+    validations:
+      required: true
+
+  - type: textarea
+    id: save-shape
+    attributes:
+      label: Relevant XML, if the problem is about the save's contents
+      description: |
+        A handful of tags, edited to remove anything personal. This is often the
+        difference between a fix this week and a fix never.
+      render: xml
+      placeholder: |
+        <feat id="3">
+          <meta v="1"/>
+          <inv>
+            <s elementaryId="157" inStorage="50" onTheWayIn="0" onTheWayOut="0"/>
+          </inv>
+        </feat>
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Error output, screenshots, a guess at the cause.

@@ -1,0 +1,97 @@
+name: Save not read correctly
+description: The editor opened your save but got the contents wrong
+title: "fix(savegame): "
+labels: ["bug", "save-format", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when the editor runs fine but disagrees with the game: a
+        resource total that does not match, a crew member missing, research that
+        reads as pending when it is done.
+
+        These reports are the most valuable ones the project gets, because the
+        save format is not documented anywhere and every fix comes from a real
+        save that behaved differently than expected.
+
+        **Do not attach your save file.** The tags below are enough.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before reporting
+      options:
+        - label: The game was closed while I was editing.
+          required: true
+        - label: I am on the latest release.
+          required: true
+        - label: I am not attaching a real save file.
+          required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: What was wrong
+      options:
+        - Cargo totals
+        - Credits
+        - Crew list (someone missing or someone who should not be there)
+        - Crew stats, skills, attributes or traits
+        - Research progress
+        - The player ship was not found at all
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: mismatch
+    attributes:
+      label: What the editor said, and what the game says
+      placeholder: |
+        Editor: Metales básicos 150
+        Game:   Base Metals 207
+    validations:
+      required: true
+
+  - type: textarea
+    id: xml
+    attributes:
+      label: The relevant tags from your save
+      description: |
+        Open `<savegames>/<slot>/save/game` in a text editor and copy the few
+        tags around the problem. Remove your colony and crew names if you would
+        rather not share them — the structure is what matters, not the values.
+      render: xml
+      placeholder: |
+        <feat id="12">
+          <someTag/>
+          <inv>
+            <s elementaryId="157" inStorage="57" onTheWayIn="0" onTheWayOut="0"/>
+          </inv>
+        </feat>
+    validations:
+      required: true
+
+  - type: input
+    id: game-version
+    attributes:
+      label: Space Haven version
+      placeholder: "0.19.4"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Editor version
+      description: Output of `modhaven --version`.
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: |
+        Output of `modhaven info` and `modhaven cargo` often helps, with your
+        paths edited out.
