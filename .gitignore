@@ -1,57 +1,19 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
+# Build output
+/bin/
+/dist/
+# Anchored: a bare "modhaven" would also match the cmd/modhaven source folder.
+/modhaven
+/modhaven.exe
 
-# PyInstaller
-*.manifest
-*.spec
+# Go workspace and coverage
+go.work
+go.work.sum
+*.out
+coverage.html
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Tests and coverage
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.coverage
-*.py,coverage
-.hypothesis/
-.pytest_cache/
-
-# Virtual environments and local env files
-.env
-.env.*
-.venv/
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+# Editor and OS noise
+.DS_Store
+*.swp
 
 # Local tooling metadata
 .atl/
